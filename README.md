@@ -1,10 +1,10 @@
-# form-validator
+# validately
 A simple form validation for NodeJS. 
 
 ## Installation
 
 ```bash
-npm install form-validator
+npm install validately
 ```
 
 ## Getting started
@@ -31,9 +31,9 @@ If we want to validate that the "sample" field contains a value,
 we can create a form-validator object with a 'required' validator. 
 
 ```js
-var formValidator = require('form-validator');
+var validately = require('validately');
 
-var sampleFormValidator = formValidator({
+var sampleFormValidator = validately({
   'sample': { 'required': true }
 });
 
@@ -68,7 +68,7 @@ The form validation library supports custom field validators.
 Add them to the form validator: 
 
 ```js
-var sampleFormValidator = formValidator({
+var sampleFormValidator = validately({
   'sample': { 'custom': { 'key': 'value' } }
 }).addFieldValidator('custom', customValidator);
 
@@ -100,10 +100,10 @@ factory method with your own.
 
 ```js
 // myValidator.js
-var formValidator = require('form-validator');
+var validately = require('validately');
 
 function myValidator(fieldRules) {
-  return validator(fieldRules).addFieldValidator('custom', customValidator);
+  return validately(fieldRules).addFieldValidator('custom', customValidator);
 }
 ```
 
@@ -120,9 +120,9 @@ var sampleFormValidator = myValidator({
 
 ```js
 // userFormValidator.js
-var formValidator = require('form-validator');
+var validately = require('validately');
 
-var userFormValidator = formValidator({
+var userFormValidator = validately({
   'username': {required: true, length: {min: 4, max: 12}},
   'email': {required: true}
 });
