@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>form-validator</h1><p>A simple form validation for NodeJS. </p>
+<h2>Installation</h2><pre class="prettyprint source lang-bash"><code>npm install form-validator</code></pre><h2>Getting started</h2><p>Given a form: </p>
+<pre class="prettyprint source lang-html"><code>&lt;form>
+  &lt;input type=&quot;text&quot; name=&quot;sample&quot; />
+  &lt;button type=&quot;submit&quot;>Submit&lt;/button>
+&lt;/form></code></pre><p>Posting this form to the server may result in post data which 
+looks something like this: </p>
+<pre class="prettyprint source lang-js"><code>var formData = {
+  'sample': 'This is some sample text!'
+};</code></pre><p>If we want to validate that the &quot;sample&quot; field contains a value, 
+we can create a form-validator object with a 'required' validator. </p>
+<pre class="prettyprint source lang-js"><code>var formValidator = require('form-validator');
+
+var sampleFormValidator = formValidator({
+  'sample': { 'required': true }
+});
+
+var validation = sampleValidator.validate(formData);
+
+if (validation.succeeded()) {
+  // Happiness :)
+} else {
+  // Sadness :(
+
+  validation.errors('sample').forEach(console.log);
+}</code></pre><p>If the validation fails, the console for this example should print: </p>
+<pre class="prettyprint source lang-sh"><code>Sample is required</code></pre><h2>Default field validators</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th>Settings</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">required</td>
+<td></td>
+<td style="text-align:left">Ensures that a field contains a value.</td>
+</tr>
+<tr>
+<td style="text-align:left">matches</td>
+<td>&quot;target field name&quot;</td>
+<td style="text-align:left">Ensures that a field's value matches a target field's value.</td>
+</tr>
+<tr>
+<td style="text-align:left">length</td>
+<td>{ [min: Number], [max: Number] }</td>
+<td style="text-align:left">Ensures that the length of a field falls within a bound.</td>
+</tr>
+</tbody>
+</table>
+<h2>Custom field validators</h2><p>The form validation library supports custom field validators. 
+Add them to the form validator: </p>
+<pre class="prettyprint source lang-js"><code>var sampleFormValidator = formValidator({
+  'sample': { 'custom': { 'key': 'value' } }
+}).addFieldValidator('custom', customValidator);
+
+function customValidator(fieldName, formData, config, next) {
+  if (formData[fieldName] !== config['key']) {
+    return next(fieldName + ' doesn\'t match ' + config['key']);
+  }
+
+  next();
+}</code></pre><p>This sample validator checks if a field matches the value stored 
+in the rule's settings. If it doesn't, it will print out a message 
+telling the user that the field does not match. </p>
+<p>Validators pass results into the &quot;next&quot; callback parameter. 
+If a validator calls &quot;next&quot; with no parameters, then the containing 
+field will not store any errors for that rule. If a validator passes 
+a message into &quot;next,&quot; then the containing field will add the 
+message into a list of errors accessible on the final validation object. </p>
+<h2>Suggestions</h2><h3>Add custom validators using a factory method</h3><p>If you make custom validators, you may want to decorate the &quot;validator&quot; 
+factory method with your own. </p>
+<pre class="prettyprint source lang-js"><code>// myValidator.js
+var formValidator = require('form-validator');
+
+function myValidator(fieldRules) {
+  return validator(fieldRules).addFieldValidator('custom', customValidator);
+}</code></pre><pre class="prettyprint source lang-js"><code>// sampleRoutes.js
+var myValidator = require('./myValidator');
+
+var sampleFormValidator = myValidator({
+  'fieldName': { 'custom': true }
+});</code></pre><h3>Split validators into reusable modules</h3><pre class="prettyprint source lang-js"><code>// userFormValidator.js
+var formValidator = require('form-validator');
+
+var userFormValidator = formValidator({
+  'username': {required: true, length: {min: 4, max: 12}},
+  'email': {required: true}
+});
+
+module.exports = userFormValidator;</code></pre><pre class="prettyprint source lang-js"><code>// routes.js
+var userFormValidator = require('./userFormValidator');
+
+// ... etc ...</code></pre><h2>Documentation</h2><p>Full documentation for all public classes and methods exposed by this 
+project can be found in the &quot;dist/docs&quot; folder. </p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Field.html">Field</a></li><li><a href="FormValidator.html">FormValidator</a></li><li><a href="FormValidatorFactory.html">FormValidatorFactory</a></li><li><a href="Rule.html">Rule</a></li><li><a href="Validation.html">Validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#length">length</a></li><li><a href="global.html#matches">matches</a></li><li><a href="global.html#required">required</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Tue Apr 07 2015 14:19:54 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
