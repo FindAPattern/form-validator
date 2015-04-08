@@ -1,0 +1,32 @@
+{
+  "name": "form-validator",
+  "version": "1.0.0",
+  "description": "A simple NodeJS form validator.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FindAPattern/form-validator.git"
+  },
+  "keywords": [
+    "node",
+    "form",
+    "validation"
+  ],
+  "author": "Stephen Mann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FindAPattern/form-validator/issues"
+  },
+  "homepage": "https://github.com/FindAPattern/form-validator",
+  "dependencies": {
+    "gulp": "^3.8.11"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "gulp-mocha": "^2.0.1",
+    "mocha": "^2.2.1"
+  }
+}
