@@ -57,10 +57,10 @@ Sample is required
 ## Default field validators
 
 | Name | Settings | Description |
-| :-- | -- | :-- |
-| required |  | Ensures that a field contains a value. |
+|:--- |:---:|:--- |
+| required | true | Ensures that a field contains a value. |
 | matches | "target field name" | Ensures that a field's value matches a target field's value. |
-| length | { [min: Number], [max: Number] } | Ensures that the length of a field falls within a bound. |
+| length | { min: Number, max: Number } | Ensures that the length of a field falls within a bound. |
 
 ## Custom field validators
 
