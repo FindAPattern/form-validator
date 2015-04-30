@@ -1,11 +1,20 @@
 var expect = require('chai').expect;
-var validator = require('../src');
+var validately = require('../src');
+var FormValidator = require('../src/FormValidator');
+var Rule = require('../src/Rule');
 
 describe('a form validator', function () {
   it('passes validation if all validators pass', function () {
-    var formValidator = validator({
-      'fieldName': { custom: true }
-    }).addFieldValidator('custom', function (fieldName, formData, config, next) { next(); });
+    var formValidator = new FormValidator();
+    
+    formValidator.addFieldValidator('custom', function (fieldName, formData, config, next) {
+      next();
+    });
+    
+    formValidator.field('fieldName').addRule(new Rule(
+      formValidator.fieldValidator('custom'),
+      true
+    ));
     
     var validation = formValidator.validate({
       'fieldName': ''
@@ -15,9 +24,16 @@ describe('a form validator', function () {
   });
   
   it('fails validation if any validators fail', function () {
-    var formValidator = validator({
-      'fieldName': { custom: true }
-    }).addFieldValidator('custom', function (fieldName, formData, config, next) { next('fail'); });
+    var formValidator = new FormValidator();
+    
+    formValidator.addFieldValidator('custom', function (fieldName, formData, config, next) {
+      next('fail');
+    });
+    
+    formValidator.field('fieldName').addRule(new Rule(
+      formValidator.fieldValidator('custom'),
+      true
+    ));
     
     var validation = formValidator.validate({
       'fieldName': ''
@@ -27,12 +43,17 @@ describe('a form validator', function () {
   });
   
   it('passes configuration data into validators when executing them', function () {
-    var formValidator = validator({
-      'fieldName': { custom: 'check me!' }
-    }).addFieldValidator('custom', function (fieldName, formData, config, next) {
+    var formValidator = new FormValidator();
+    
+    formValidator.addFieldValidator('custom', function (fieldName, formData, config, next) {
       expect(config).to.equal('check me!');
       next();
     });
+    
+    formValidator.field('fieldName').addRule(new Rule(
+      formValidator.fieldValidator('custom'),
+      'check me!'
+    ));
     
     var validation = formValidator.validate({'fieldName': ''});
   });

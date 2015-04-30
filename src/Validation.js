@@ -31,6 +31,16 @@ Validation.prototype.errors = function (fieldName) {
 };
 
 /**
+ * Retrieves the list of error field names. Returns
+ * an empty array if no errors are stored. 
+ * 
+ * @returns {string[]}
+ */
+Validation.prototype.errorFieldNames = function () {
+  return Object.keys(this.fieldErrors);
+};
+
+/**
  * Merges two validations. If both validations contain errors for 
  * the same field, the second validation's errors will overwrite the 
  * first. 
@@ -63,7 +73,9 @@ Validation.prototype.merge = function (validation) {
  * @returns {Validation}
  */
 Validation.merge = function () {
-  return arguments.reduce(function (previous, current) {
+  var validations = convertArgumentsToArray(arguments);
+
+  return validations.reduce(function (previous, current) {
     return previous.merge(current);
   });
 };
@@ -88,5 +100,15 @@ Validation.prototype._copyErrorsTo = function (validation) {
     });
   }.bind(this));
 };
+
+function convertArgumentsToArray(arguments) {
+  var args = [];
+  
+  for (var key in arguments) {
+    args.push(arguments[key]);
+  }
+  
+  return args;
+}
 
 module.exports = Validation;

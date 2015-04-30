@@ -15,6 +15,15 @@ describe('a validation', function () {
     
     expect(validation.errors('fieldName')).to.deep.equal(['message'])
   });
+  
+  it('returns error field names', function () {
+    var validation = new Validation();
+    
+    validation.addError('a', 'dummy');
+    validation.addError('b', 'data');
+    
+    expect(validation.errorFieldNames()).to.deep.equal(['a','b']);
+  });
 
   describe('when merged', function () {
     it('does not succeeded if the first validation has failed', function () {

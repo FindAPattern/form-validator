@@ -31,19 +31,26 @@ Field.prototype.validate = function (formData) {
   // accepts callbacks. If rule.evaluate ever becomes a 
   // deferred call, this method will fail. 
   return this.rules.map(function (rule) {
-                     var validation = new Validation();
-    
-                     rule.evaluate(this.name, formData, function (err) {
-                       if (err) validation.addError(this.name, this._replaceTokens(err));
-                     }.bind(this));
-    
-                     return validation;
-                   }.bind(this))
-                   .reduce(Validation.merge);
-}
+    var validation = new Validation();
 
-Field.prototype._replaceTokens = function (str) {
-  return str.replace('{field.name}', this.name);
+    rule.evaluate(this.name, formData, function (err) {
+      if (err) {
+        if (is(Validation, err)) {
+          validation = validation.merge(err);
+        } else {
+          validation.addError(this.name, err);
+        }
+      }
+    }.bind(this));
+    
+    return validation;
+  }.bind(this)).reduce(function (previous, current) {
+    return previous.merge(current);
+  });
+};
+
+function is(type, obj) {
+    return obj !== undefined && obj !== null && obj.constructor === type;
 }
 
 module.exports = Field;

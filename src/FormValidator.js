@@ -1,6 +1,7 @@
 var Field = require('./Field');
 var Rule = require('./Rule');
 var Validation = require('./Validation');
+var ArrayField = require('./ArrayField');
 
 /**
  * Represents a form validator.
@@ -61,6 +62,17 @@ FormValidator.prototype.field = function (fieldName) {
 }
 
 /**
+ * Creates an array field if it doesn't exist.
+ * Returns field by its name. 
+ *
+ * @param {string} fieldName - Name of field to create. 
+ * @returns {ArrayField}
+ */
+FormValidator.prototype.arrayField = function (fieldName) {
+  return this.fields[fieldName] = (this.fields[fieldName] || new ArrayField(fieldName));
+}
+
+/**
  * Retrieves a list of all field names stored by this validator. 
  *
  * @returns {string[]}
@@ -84,7 +96,9 @@ FormValidator.prototype.validate = function (form) {
     .map(function (fieldName) {
       return this.field(fieldName).validate(form);
     }.bind(this))
-    .reduce(Validation.merge);
+    .reduce(function (previous, current) {
+      return previous.merge(current);
+    });
 }
 
 module.exports = FormValidator;

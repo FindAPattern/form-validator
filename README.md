@@ -61,6 +61,7 @@ Sample is required
 | required | true | Ensures that a field contains a value. |
 | matches | "target field name" | Ensures that a field's value matches a target field's value. |
 | length | { min: Number, max: Number } | Ensures that the length of a field falls within a bound. |
+| schema | { fieldName: { validatorName: config } } | Ensures that a field's contents match a schema. |
 
 ## Custom field validators
 
@@ -90,6 +91,104 @@ If a validator calls "next" with no parameters, then the containing
 field will not store any errors for that rule. If a validator passes 
 a message into "next," then the containing field will add the 
 message into a list of errors accessible on the final validation object. 
+
+## Arrays
+
+Configure validately to handle arrays by wrapping a field's configuration 
+in an array: 
+
+```js
+var formData = {
+  names: ['steve', 'dave']
+};
+
+var validator = validately({
+  'names': [{
+    'required': true,
+    'length': { min: 2, max: 20 }
+  }]
+});
+
+var validation = validator.validate(formData);
+
+// ...
+```
+
+## Nested Objects
+
+Configure validately to handle nested, structured objects by using the 
+"schema" field validator. 
+
+```js
+var formData = {
+  'name': {
+    'first': 'john',
+    'last': 'smith'
+  }
+};
+
+var validator = validately({
+  'name': {
+    'schema': {
+      'first': { required: true },
+      'last': { required: true }
+    }
+  }
+});
+
+// ...
+```
+
+### Using custom validators in a nested schema
+
+The "schema" validator uses the "validately" factory by default in order to 
+validate nested objects. Adding custom validators requires overriding this 
+default behavior by either deriving a custom factory from FormValidatorFactory, 
+or by manually re-adding the 'schema' validator in your custom factory. 
+
+#### Method 1: Overriding the default factory
+
+```js
+var util = require('util');
+var FormValidatorFactory = require('validately').factory;
+
+function CustomFormValidatorFactory() {
+  FormValidatorFactory.call(this);
+}
+
+util.inherits(CustomFormValidatorFactory, FormValidatorFactory);
+
+CustomFormValidatorFactory.prototype.create = function (fieldRules) {
+  var validator = FormValidatorFactory.prototype.create.call(this, fieldRules);
+  
+  // validator.addFieldValidator('custom', ...);
+  
+  return validator;
+};
+
+var sampleValidator = new CustomFormValidatorFactory().create({
+  'fieldName': { 'custom' : true }
+});
+
+sampleValidator.validate(formData);
+```
+
+#### Method 2: Re-adding the 'schema' validator
+
+```js
+var validately = require('validately');
+var buildSchemaValidator = require('validately').validators.buildSchemaValidator;
+ 
+function myValidator(fieldRules) {
+  return validately(fieldRules).addFieldValidator('schema', buildSchemaValidator(myValidator));
+}
+
+var sampleValidator = myValidator({
+  'fieldName': { 'custom' : true }
+});
+
+sampleValidator.validate(formData);
+```
 
 ## Suggestions
 

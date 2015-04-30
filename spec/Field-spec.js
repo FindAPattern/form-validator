@@ -23,7 +23,7 @@ describe('a field', function () {
     expect(validation.succeeded()).to.equal(true);
   });
   
-    it('stores Rule error messages', function () {
+  it('stores Rule error messages', function () {
     var field = new Field('sample');
     
     field.addRule(new Rule(function (fieldName, formData, config, next) { next('Hello, sample!'); }, null));
