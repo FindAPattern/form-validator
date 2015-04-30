@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: FormValidator</title>
+    <title>JSDoc: Class: Validation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: FormValidator</h1>
+    <h1 class="page-title">Class: Validation</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-        FormValidator
+        Validation
         </h2>
         
     
@@ -42,14 +42,14 @@
 
     
 
-    <h4 class="name" id="FormValidator"><span class="type-signature"></span>new FormValidator<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Validation"><span class="type-signature"></span>new Validation<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Represents a form validator.
+    Represents the results of validating a form.
 </div>
 
 
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="FormValidator.js.html">FormValidator.js</a>, <a href="FormValidator.js.html#line10">line 10</a>
+        <a href="Validation.js.html">Validation.js</a>, <a href="Validation.js.html#line5">line 5</a>
     </li></ul></dd>
     
 
@@ -142,15 +142,19 @@
 
     
 
-    <h4 class="name" id="addFieldValidator"><span class="type-signature"></span>addFieldValidator<span class="signature">(validatorName, fieldValidator)</span><span class="type-signature"> &rarr; {<a href="FormValidator.html">FormValidator</a>}</span></h4>
+    <h4 class="name" id=".merge"><span class="type-signature">(static) </span>merge<span class="signature">(Validation)</span><span class="type-signature"> &rarr; {<a href="Validation.html">Validation</a>}</span></h4>
 
     
 
 
 
 <div class="description">
-    Stores a reusable field validator for use by rules contained within 
-this validator.
+    Merges a list of validations, cascading conflicting field errors 
+from the end of the array to the beginning. 
+
+This operation does not modify any input validations. It creates a 
+new validation which contains the combined information from all 
+input validations.
 </div>
 
 
@@ -186,13 +190,13 @@ this validator.
 
         <tr>
             
-                <td class="name"><code>validatorName</code></td>
+                <td class="name"><code>Validation</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type"><a href="Validation.html">Validation</a></span>
 
 
             
@@ -202,30 +206,7 @@ this validator.
 
             
 
-            <td class="description last">Name by which to retrieve validators.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>fieldValidator</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Field validator to store.</td>
+            <td class="description last">to merge.</td>
         </tr>
 
     
@@ -266,7 +247,7 @@ this validator.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="FormValidator.js.html">FormValidator.js</a>, <a href="FormValidator.js.html#line23">line 23</a>
+        <a href="Validation.js.html">Validation.js</a>, <a href="Validation.js.html#line75">line 75</a>
     </li></ul></dd>
     
 
@@ -300,7 +281,7 @@ this validator.
     </dt>
     <dd>
         
-<span class="param-type"><a href="FormValidator.html">FormValidator</a></span>
+<span class="param-type"><a href="Validation.html">Validation</a></span>
 
 
     </dd>
@@ -315,14 +296,14 @@ this validator.
 
     
 
-    <h4 class="name" id="field"><span class="type-signature"></span>field<span class="signature">(fieldName)</span><span class="type-signature"> &rarr; {<a href="Field.html">Field</a>}</span></h4>
+    <h4 class="name" id="addError"><span class="type-signature"></span>addError<span class="signature">(fieldName, error)</span><span class="type-signature"> &rarr; {<a href="Validation.html">Validation</a>}</span></h4>
 
     
 
 
 
 <div class="description">
-    Retrieves a field by its name.
+    Stores an error message for a field, categorized by the field name.
 </div>
 
 
@@ -374,7 +355,30 @@ this validator.
 
             
 
-            <td class="description last">Name of field to retrieve.</td>
+            <td class="description last">Name of the field.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Error message.</td>
         </tr>
 
     
@@ -415,7 +419,7 @@ this validator.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="FormValidator.js.html">FormValidator.js</a>, <a href="FormValidator.js.html#line59">line 59</a>
+        <a href="Validation.js.html">Validation.js</a>, <a href="Validation.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -449,7 +453,7 @@ this validator.
     </dt>
     <dd>
         
-<span class="param-type"><a href="Field.html">Field</a></span>
+<span class="param-type"><a href="Validation.html">Validation</a></span>
 
 
     </dd>
@@ -464,14 +468,15 @@ this validator.
 
     
 
-    <h4 class="name" id="fieldNames"><span class="type-signature"></span>fieldNames<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+    <h4 class="name" id="errorFieldNames"><span class="type-signature"></span>errorFieldNames<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
 
     
 
 
 
 <div class="description">
-    Retrieves a list of all field names stored by this validator.
+    Retrieves the list of error field names. Returns
+an empty array if no errors are stored.
 </div>
 
 
@@ -515,7 +520,7 @@ this validator.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="FormValidator.js.html">FormValidator.js</a>, <a href="FormValidator.js.html#line68">line 68</a>
+        <a href="Validation.js.html">Validation.js</a>, <a href="Validation.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -564,16 +569,15 @@ this validator.
 
     
 
-    <h4 class="name" id="fieldValidator"><span class="type-signature"></span>fieldValidator<span class="signature">(validatorName)</span><span class="type-signature"> &rarr; {function}</span></h4>
+    <h4 class="name" id="errors"><span class="type-signature"></span>errors<span class="signature">(fieldName)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
 
     
 
 
 
 <div class="description">
-    Retrieves a reusable field validator by its name. The validator returned 
-will retrieve the internal validator upon calling it, allowing rules to 
-evaluate validators added after the rules were created.
+    Retrieves the list of errors stored for a field name. Returns 
+an empty array if no errors are stored.
 </div>
 
 
@@ -609,7 +613,7 @@ evaluate validators added after the rules were created.
 
         <tr>
             
-                <td class="name"><code>validatorName</code></td>
+                <td class="name"><code>fieldName</code></td>
             
 
             <td class="type">
@@ -625,7 +629,7 @@ evaluate validators added after the rules were created.
 
             
 
-            <td class="description last">Name of validator to retrieve.</td>
+            <td class="description last">Name of the field.</td>
         </tr>
 
     
@@ -666,7 +670,7 @@ evaluate validators added after the rules were created.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="FormValidator.js.html">FormValidator.js</a>, <a href="FormValidator.js.html#line37">line 37</a>
+        <a href="Validation.js.html">Validation.js</a>, <a href="Validation.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -700,7 +704,7 @@ evaluate validators added after the rules were created.
     </dt>
     <dd>
         
-<span class="param-type">function</span>
+<span class="param-type">Array.&lt;string></span>
 
 
     </dd>
@@ -715,14 +719,20 @@ evaluate validators added after the rules were created.
 
     
 
-    <h4 class="name" id="hasFieldValidator"><span class="type-signature"></span>hasFieldValidator<span class="signature">(validatorName)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="merge"><span class="type-signature"></span>merge<span class="signature">(Validation)</span><span class="type-signature"> &rarr; {<a href="Validation.html">Validation</a>}</span></h4>
 
     
 
 
 
 <div class="description">
-    Checks of the form validator contains a field validator.
+    Merges two validations. If both validations contain errors for 
+the same field, the second validation's errors will overwrite the 
+first. 
+
+This operation does not modify either validation. It creates a 
+new validation which contains the combined information from both 
+input validations.
 </div>
 
 
@@ -758,13 +768,13 @@ evaluate validators added after the rules were created.
 
         <tr>
             
-                <td class="name"><code>validatorName</code></td>
+                <td class="name"><code>Validation</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type"><a href="Validation.html">Validation</a></span>
 
 
             
@@ -774,7 +784,7 @@ evaluate validators added after the rules were created.
 
             
 
-            <td class="description last">Name of validator to retrieve.</td>
+            <td class="description last">to merge.</td>
         </tr>
 
     
@@ -815,160 +825,7 @@ evaluate validators added after the rules were created.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="FormValidator.js.html">FormValidator.js</a>, <a href="FormValidator.js.html#line49">line 49</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="validate"><span class="type-signature"></span>validate<span class="signature">(form)</span><span class="type-signature"> &rarr; {<a href="Validation.html">Validation</a>}</span></h4>
-
-    
-
-
-
-<div class="description">
-    Validates all rules on all fields stored in this validation, using only 
-the reusable validators stored in this validation, against form data 
-structured as: {
-  "fieldName": "fieldValue"
-}.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>form</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Form data to validate.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="FormValidator.js.html">FormValidator.js</a>, <a href="FormValidator.js.html#line82">line 82</a>
+        <a href="Validation.js.html">Validation.js</a>, <a href="Validation.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -1013,6 +870,106 @@ structured as: {
 
 
         
+            
+
+    
+
+    <h4 class="name" id="succeeded"><span class="type-signature"></span>succeeded<span class="signature">()</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Determines if the validation succeeded.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Validation.js.html">Validation.js</a>, <a href="Validation.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
     
 
     
@@ -1028,13 +985,13 @@ structured as: {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Field.html">Field</a></li><li><a href="FormValidator.html">FormValidator</a></li><li><a href="FormValidatorFactory.html">FormValidatorFactory</a></li><li><a href="Rule.html">Rule</a></li><li><a href="Validation.html">Validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#length">length</a></li><li><a href="global.html#matches">matches</a></li><li><a href="global.html#required">required</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArrayField.html">ArrayField</a></li><li><a href="Field.html">Field</a></li><li><a href="FormValidator.html">FormValidator</a></li><li><a href="FormValidatorFactory.html">FormValidatorFactory</a></li><li><a href="Rule.html">Rule</a></li><li><a href="Validation.html">Validation</a></li></ul><h3>Global</h3><ul><li><a href="global.html#buildSchemaValidator">buildSchemaValidator</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#matches">matches</a></li><li><a href="global.html#required">required</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Thu Apr 09 2015 08:08:07 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta3</a> on Wed Apr 29 2015 20:44:04 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
