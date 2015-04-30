@@ -1,6 +1,6 @@
 {
   "name": "validately",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple NodeJS form validator.",
   "main": "src/index.js",
   "scripts": {
