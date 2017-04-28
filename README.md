@@ -1,6 +1,9 @@
 # validately
 A simple form validation for NodeJS. 
 
+(Created with love for [Plansible, a weight lifting journal
+app](http://plansible.com).)
+
 ## Installation
 
 ```bash
